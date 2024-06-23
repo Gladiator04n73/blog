@@ -1,0 +1,26 @@
+<% if user_signed_in? %>
+<span>Здравствуйте, <%= current_user.email %></span>
+<%= link_to 'Выйти', destroy_user_session_path, :method => :delete %>
+<%= link_to 'Редактировать профиль', edit_user_registration_path %>
+
+<% else %>
+<%= link_to 'Войти', new_user_session_path %> или <%= link_to 'Зарегистрироваться', new_user_registration_path %>
+<% end %>
+
+<h1>Articles</h1>
+
+Our blog has <%= Article.public_count %> articles and counting!
+
+<ul>
+  <% @articles.each do |article| %>
+    <% unless article.archived? %>
+      <li>
+        <%= link_to article.title, article %>
+      </li>
+    <% end %>
+  <% end %>
+</ul>
+
+<%= link_to "New Article", new_article_path %>
+<p class="notice"><%= notice %></p>
+<p class="alert"><%= alert %></p>
