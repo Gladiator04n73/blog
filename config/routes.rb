@@ -3,11 +3,9 @@ Rails.application.routes.draw do
   resources :articles do
     resources :comments
   end
-  authenticated :user do
-    root to:'articles#index', as: :authenticated_root
-  end
-  unauthenticated do
-    root to: 'devise/sessions#new', as: :unauthenticated_root
-  end
+  devise_scope :user do  
+    get '/users/sign_out' => 'devise/sessions#destroy'     
+ end
+  root to: "articles#index"
   
 end
